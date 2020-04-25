@@ -1,0 +1,2 @@
+rootProject.name='Dwayne Showcase'
+include ':app'
