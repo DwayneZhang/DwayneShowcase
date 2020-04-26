@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".textlink.TextLinkActivity" />
+        <activity android:name=".focustest.FocusTestActivity" />
     </application>
 
 </manifest>

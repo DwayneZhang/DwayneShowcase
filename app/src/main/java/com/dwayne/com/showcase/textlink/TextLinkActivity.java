@@ -1,7 +1,6 @@
 package com.dwayne.com.showcase.textlink;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -13,9 +12,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.dwayne.com.showcase.BaseActivity;
 import com.dwayne.com.showcase.R;
+
+import butterknife.BindView;
 
 
 /**
@@ -27,22 +27,31 @@ import com.dwayne.com.showcase.R;
  * @class TextView多个超链接实现跳转
  */
 
-public class TextLinkActivity extends AppCompatActivity {
+public class TextLinkActivity extends BaseActivity {
 
+    @BindView(R.id.tv_link)
     TextView tvLink;
 
     String conent = "文本超链接<a href='https://www.google.com/'>Google谷歌</a>及<a " +
             "href='https://www.baidu.com/'>Baidu百度</a>";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_text_link);
-        tvLink = findViewById(R.id.tv_link);
+    public int intiLayout() {
+        return R.layout.activity_text_link;
+    }
 
+    @Override
+    public void initView() {
+        tvLink = findViewById(R.id.tv_link);
         //使超链接可点击
         tvLink.setMovementMethod(LinkMovementMethod.getInstance());
         tvLink.setText(setTextLink(this, conent));
+
+        initToolBar("TextView多个超链接实现跳转", true);
+    }
+
+    @Override
+    public void initData() {
 
     }
 

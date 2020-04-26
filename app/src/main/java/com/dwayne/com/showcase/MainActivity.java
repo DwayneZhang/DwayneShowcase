@@ -1,8 +1,12 @@
 package com.dwayne.com.showcase;
 
-import android.os.Bundle;
+import android.content.Intent;
+import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.dwayne.com.showcase.focustest.FocusTestActivity;
+import com.dwayne.com.showcase.textlink.TextLinkActivity;
+
+import butterknife.OnClick;
 
 /**
  * @author Dwayne
@@ -14,11 +18,32 @@ import androidx.appcompat.app.AppCompatActivity;
  */
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public int intiLayout() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    public void initView() {
+        initToolBar("博客演示代码", false);
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @OnClick({R.id.tv_text_link, R.id.tv_focus_test})
+    public void onViewClicked(View view) {
+        switch(view.getId()) {
+            case R.id.tv_text_link:
+                startActivity(new Intent(this, TextLinkActivity.class));
+                break;
+            case R.id.tv_focus_test:
+                startActivity(new Intent(this, FocusTestActivity.class));
+                break;
+        }
     }
 }
