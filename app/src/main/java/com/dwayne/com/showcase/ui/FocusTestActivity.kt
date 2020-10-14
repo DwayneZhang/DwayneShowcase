@@ -1,4 +1,4 @@
-package com.dwayne.com.showcase.focustest
+package com.dwayne.com.showcase.ui
 
 import android.view.View
 import android.view.View.OnFocusChangeListener

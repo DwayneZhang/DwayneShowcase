@@ -1,4 +1,4 @@
-package com.dwayne.com.showcase.textlink
+package com.dwayne.com.showcase.ui
 
 import android.content.Context
 import android.text.Html
@@ -27,7 +27,7 @@ class TextLinkActivity : BaseActivity() {
 
     @BindView(R.id.tv_link)
     lateinit var tvLink: TextView
-    var conent = "文本超链接<a href='https://www.google.com/'>Google谷歌</a>及<a " +
+    var content = "文本超链接<a href='https://www.google.com/'>Google谷歌</a>及<a " +
             "href='https://www.baidu.com/'>Baidu百度</a>"
 
     override fun intiLayout(): Int {
@@ -38,7 +38,7 @@ class TextLinkActivity : BaseActivity() {
         tvLink = findViewById(R.id.tv_link)
         //使超链接可点击
         tvLink.movementMethod = LinkMovementMethod.getInstance()
-        tvLink.text = setTextLink(this, conent)
+        tvLink.text = setTextLink(this, content)
         initToolBar("TextView多个超链接实现跳转", true)
     }
 

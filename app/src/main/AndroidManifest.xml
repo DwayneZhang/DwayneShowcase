@@ -16,8 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".textlink.TextLinkActivity" />
-        <activity android:name=".focustest.FocusTestActivity" />
+        <activity android:name=".ui.TextLinkActivity" />
+        <activity android:name=".ui.FocusTestActivity" />
+        <activity android:name=".ui.PathMeasureActivity" />
     </application>
 
 </manifest>
