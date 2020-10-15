@@ -62,6 +62,7 @@ class WaveView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
             index += waveLength
         } while (index < width + waveLength)
 
+        circlePath.reset()
         circlePath.addCircle(width.div(2F), 1000F, 200F, Path.Direction.CW)
     }
 
@@ -83,15 +84,16 @@ class WaveView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         setPathData()
+        mMatrix.reset()
         pathMeasure = PathMeasure(path, false)
         length = pathMeasure.length
-        mMatrix.reset()
         pathMeasure.getMatrix(boatDx, mMatrix, PathMeasure.TANGENT_MATRIX_FLAG
                 or PathMeasure.POSITION_MATRIX_FLAG)
         mMatrix.preTranslate((-bitmap.width / 2).toFloat(), (-bitmap.height).toFloat())
         canvas.drawPath(path, paint)
         canvas.drawBitmap(bitmap, mMatrix, paint)
 
+        circleMatrix.reset()
         circlePathMeasure = PathMeasure(circlePath, false)
         circleLength = circlePathMeasure.length
         circlePathMeasure.getMatrix(circleDx, circleMatrix, PathMeasure.TANGENT_MATRIX_FLAG
