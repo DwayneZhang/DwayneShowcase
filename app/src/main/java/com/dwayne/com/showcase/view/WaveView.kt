@@ -35,6 +35,8 @@ class WaveView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     private var circleDx: Float = 0F
     private var mMatrix = Matrix()
     private var circleMatrix = Matrix()
+    private var tan = floatArrayOf(0.0F, 0.0F)
+    private var pos = floatArrayOf(0.0F, 0.0F)
 
     init {
         paint = Paint()
@@ -55,6 +57,7 @@ class WaveView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
         path.reset()
         var halfWaveLength = waveLength / 2
         var index = -waveLength
+        //绘制二阶贝塞尔曲线
         path.moveTo(-waveLength + dx, 500F)
         do {
             path.rQuadTo(halfWaveLength / 2, -150F, halfWaveLength, 0F)
@@ -62,11 +65,13 @@ class WaveView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
             index += waveLength
         } while (index < width + waveLength)
 
+        //绘制圆形
         circlePath.reset()
         circlePath.addCircle(width.div(2F), 1000F, 200F, Path.Direction.CW)
     }
 
     private fun startAnimation() {
+        //属性动画
         var animator = ValueAnimator.ofInt(0, 1000)
         animator.duration = 3000
         animator.interpolator = LinearInterpolator()
@@ -87,6 +92,26 @@ class WaveView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
         mMatrix.reset()
         pathMeasure = PathMeasure(path, false)
         length = pathMeasure.length
+
+        /*
+        * 因为路径是不规则的，为了让小船在移动的时候，紧贴着路径，所以我们需要移动小船并旋转一定的角度
+        * 为了达到目的，有两种方法
+        */
+
+        /*
+        //方法一：自己计算
+        //获取Path指定点的的位置，和正切值tan
+        pathMeasure.getPosTan(boatDx, pos, tan)
+        //将tan值通过反三角函数得到对应的弧度，然后将弧度转换成度数
+		var degrees : Float = ((Math.atan2(tan[1].toDouble(), tan[0].toDouble())*180f/Math.PI).toFloat())
+        //旋转
+		mMatrix.postRotate(degrees , bitmap.width/2F, bitmap.height/2F)
+        //移动
+		mMatrix.postTranslate((pos[0]-bitmap.width/2F).toFloat(), (pos[1]-bitmap.height).toFloat())
+		*/
+
+        //方法二：使用API
+        //getMatrix()，获取Path指定位置的Matrix
         pathMeasure.getMatrix(boatDx, mMatrix, PathMeasure.TANGENT_MATRIX_FLAG
                 or PathMeasure.POSITION_MATRIX_FLAG)
         mMatrix.preTranslate((-bitmap.width / 2).toFloat(), (-bitmap.height).toFloat())
